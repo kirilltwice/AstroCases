@@ -1,0 +1,13 @@
+cases-open:
+  title:
+    - 'Открытие кейса <white>%s%</white>'
+  subtitle: '<gray>Ждите...</gray>'
+
+cases-message:
+  - '<yellow>Вы решили открыть кейс бла бла бла'
+  - '<yellow>Ну что открываем?'
+  - '%s или %n'
+
+button:
+  yes: '<green><bold>[ДА]</bold></green>'
+  no: '<red><bold>[НЕТ]</bold></red>'
