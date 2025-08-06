@@ -8,13 +8,10 @@ import dev.twice.astrocases.listeners.CaseInteractListener;
 import dev.twice.astrocases.listeners.PlayerQuitListener;
 import dev.twice.astrocases.managers.CaseManager;
 import dev.twice.astrocases.managers.OpeningManager;
-import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Getter
 public final class CasesPlugin extends JavaPlugin {
 
-    @Getter
     private static CasesPlugin instance;
 
     private ConfigManager configManager;
@@ -52,5 +49,29 @@ public final class CasesPlugin extends JavaPlugin {
         if (openingManager != null) {
             openingManager.returnAllCases();
         }
+    }
+
+    public static CasesPlugin getInstance() {
+        return instance;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public CaseManager getCaseManager() {
+        return caseManager;
+    }
+
+    public OpeningManager getOpeningManager() {
+        return openingManager;
+    }
+
+    public CaseInteractListener getCaseInteractListener() {
+        return caseInteractListener;
+    }
+
+    public LiteCommands<org.bukkit.command.CommandSender> getLiteCommands() {
+        return liteCommands;
     }
 }

@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import dev.twice.astrocases.CasesPlugin;
 import dev.twice.astrocases.models.Case;
 import dev.twice.astrocases.models.CaseReward;
-import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +14,6 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
 
-@Getter
 public class CaseManager {
 
     private final CasesPlugin plugin;
@@ -30,7 +28,6 @@ public class CaseManager {
         File casesDir = new File(plugin.getDataFolder(), "cases");
         if (!casesDir.exists()) {
             casesDir.mkdirs();
-            createDefaultCase();
             return;
         }
 
@@ -43,36 +40,32 @@ public class CaseManager {
     }
 
     private void loadCase(File file) {
-        try {
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-            String caseName = file.getName().replace(".yml", "");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        String caseName = file.getName().replace(".yml", "");
 
-            String name = config.getString("options.name", caseName);
-            List<String> description = config.getStringList("options.description");
-            String itemString = config.getString("options.item", "CHEST");
+        String name = config.getString("options.name", caseName);
+        List<String> description = config.getStringList("options.description");
+        String itemString = config.getString("options.item", "CHEST");
 
-            ItemStack item = createItemFromString(itemString);
+        ItemStack item = createItemFromString(itemString);
 
-            List<CaseReward> rewards = new ArrayList<>();
-            if (config.isConfigurationSection("rewards")) {
-                for (String key : config.getConfigurationSection("rewards").getKeys(false)) {
-                    String path = "rewards." + key;
-                    double chance = config.getDouble(path + ".chance", 1.0);
-                    String titleText = config.getString(path + ".titleText", "");
-                    List<String> message = config.getStringList(path + ".message");
-                    String commandsGive = config.getString(path + ".commands-give", "");
+        List<CaseReward> rewards = new ArrayList<>();
+        if (config.isConfigurationSection("rewards")) {
+            for (String key : config.getConfigurationSection("rewards").getKeys(false)) {
+                String path = "rewards." + key;
+                double chance = config.getDouble(path + ".chance", 1.0);
+                String titleText = config.getString(path + ".titleText", "");
+                String subtitleText = config.getString(path + ".subtitleText", "");
+                List<String> message = config.getStringList(path + ".message");
+                String commandsGive = config.getString(path + ".commands-give", "");
 
-                    CaseReward reward = new CaseReward(key, chance, titleText, message, commandsGive);
-                    rewards.add(reward);
-                }
+                CaseReward reward = new CaseReward(key, chance, titleText, subtitleText, message, commandsGive);
+                rewards.add(reward);
             }
-
-            Case caseObj = new Case(caseName, name, description, item, rewards);
-            cases.put(caseName, caseObj);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        Case caseObj = new Case(caseName, name, description, item, rewards);
+        cases.put(caseName, caseObj);
     }
 
     private ItemStack createItemFromString(String itemString) {
@@ -102,21 +95,9 @@ public class CaseManager {
             profileField.set(meta, profile);
 
             skull.setItemMeta(meta);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
 
         return skull;
-    }
-
-    private void createDefaultCase() {
-        File defaultCase = new File(plugin.getDataFolder(), "cases/test.yml");
-        try {
-            defaultCase.getParentFile().mkdirs();
-            plugin.saveResource("cases/test.yml", false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public Case getCase(String name) {
@@ -125,5 +106,9 @@ public class CaseManager {
 
     public Set<String> getCaseNames() {
         return cases.keySet();
+    }
+
+    public Map<String, Case> getCases() {
+        return cases;
     }
 }

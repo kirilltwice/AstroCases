@@ -44,7 +44,8 @@ public class CaseInteractListener implements Listener {
         event.setCancelled(true);
 
         if (plugin.getOpeningManager().isOpening(player.getUniqueId())) {
-            player.sendMessage(miniMessage.deserialize("<red>Вы уже открываете кейс!"));
+            String message = plugin.getConfigManager().getMessage("case-opening.already-opening");
+            player.sendMessage(miniMessage.deserialize(message));
             return;
         }
 
@@ -52,7 +53,8 @@ public class CaseInteractListener implements Listener {
         Case caseObj = plugin.getCaseManager().getCase(caseId);
 
         if (caseObj == null) {
-            player.sendMessage(miniMessage.deserialize("<red>Неизвестный кейс!"));
+            String message = plugin.getConfigManager().getMessage("case-opening.unknown-case");
+            player.sendMessage(miniMessage.deserialize(message));
             return;
         }
 
@@ -64,9 +66,9 @@ public class CaseInteractListener implements Listener {
     }
 
     private void showCaseConfirmation(Player player, Case caseObj, ItemStack caseItem) {
-        List<String> messages = plugin.getConfigManager().getMainConfig().getStringList("cases-message");
-        String yesButtonText = plugin.getConfigManager().getMainConfig().getString("button.yes", "<green><bold>[ДА]</bold></green>");
-        String noButtonText = plugin.getConfigManager().getMainConfig().getString("button.no", "<red><bold>[НЕТ]</bold></red>");
+        List<String> messages = plugin.getConfigManager().getMessageList("case-opening.confirm-message");
+        String yesButtonText = plugin.getConfigManager().getMessage("case-opening.button.yes");
+        String noButtonText = plugin.getConfigManager().getMessage("case-opening.button.no");
 
         pendingCases.put(player.getUniqueId(), new PendingCase(caseObj, caseItem));
 
@@ -117,7 +119,8 @@ public class CaseInteractListener implements Listener {
             } else {
                 player.getWorld().dropItemNaturally(player.getLocation(), pending.caseItem);
             }
-            player.sendMessage(miniMessage.deserialize("<gray>Открытие кейса отменено."));
+            String message = plugin.getConfigManager().getMessage("case-opening.cancel");
+            player.sendMessage(miniMessage.deserialize(message));
         }
     }
 
@@ -126,7 +129,8 @@ public class CaseInteractListener implements Listener {
         ItemStack item = event.getItemDrop().getItemStack();
         if (ItemUtils.isCaseItem(item)) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(miniMessage.deserialize("<red>Нельзя выбрасывать кейсы!"));
+            String message = plugin.getConfigManager().getMessage("case-opening.cant-drop");
+            event.getPlayer().sendMessage(miniMessage.deserialize(message));
         }
     }
 
@@ -138,7 +142,8 @@ public class CaseInteractListener implements Listener {
 
             if (inventoryType != InventoryType.PLAYER && inventoryType != InventoryType.CRAFTING) {
                 event.setCancelled(true);
-                event.getWhoClicked().sendMessage(miniMessage.deserialize("<red>Нельзя помещать кейсы в хранилища!"));
+                String message = plugin.getConfigManager().getMessage("case-opening.cant-store");
+                event.getWhoClicked().sendMessage(miniMessage.deserialize(message));
                 return;
             }
         }
@@ -148,7 +153,8 @@ public class CaseInteractListener implements Listener {
             InventoryType inventoryType = event.getInventory().getType();
             if (inventoryType != InventoryType.PLAYER && inventoryType != InventoryType.CRAFTING) {
                 event.setCancelled(true);
-                event.getWhoClicked().sendMessage(miniMessage.deserialize("<red>Нельзя помещать кейсы в хранилища!"));
+                String message = plugin.getConfigManager().getMessage("case-opening.cant-store");
+                event.getWhoClicked().sendMessage(miniMessage.deserialize(message));
             }
         }
     }
@@ -168,7 +174,8 @@ public class CaseInteractListener implements Listener {
             }
 
             plugin.getConfigManager().clearOfflineReturns(player.getUniqueId());
-            player.sendMessage(miniMessage.deserialize("<green>Вам возвращены кейсы, которые не были открыты!"));
+            String message = plugin.getConfigManager().getMessage("case-opening.offline-return");
+            player.sendMessage(miniMessage.deserialize(message));
         }
     }
 

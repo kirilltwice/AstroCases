@@ -1,13 +1,25 @@
-cases-open:
-  title:
-    - 'Открытие кейса <white>%s%</white>'
-  subtitle: '<gray>Ждите...</gray>'
+messages:
+  case-opening:
+    confirm-message:
+      - '<yellow>Вы решили открыть кейс'
+      - '<yellow>Ну что открываем?'
+      - '%s или %n'
+    button:
+      yes: '<green><bold>[ДА]</bold></green>'
+      no: '<red><bold>[НЕТ]</bold></red>'
+    cancel: '<gray>Открытие кейса отменено.'
+    already-opening: '<red>Вы уже открываете кейс!'
+    unknown-case: '<red>Неизвестный кейс!'
+    cant-drop: '<red>Нельзя выбрасывать кейсы!'
+    cant-store: '<red>Нельзя помещать кейсы в хранилища!'
 
-cases-message:
-  - '<yellow>Вы решили открыть кейс бла бла бла'
-  - '<yellow>Ну что открываем?'
-  - '%s или %n'
+    offline-return: '<green>Вам возвращены кейсы, которые не были открыты!'
 
-button:
-  yes: '<green><bold>[ДА]</bold></green>'
-  no: '<red><bold>[НЕТ]</bold></red>'
+  commands:
+    case-not-found: '<red>Кейс с именем "%case%" не найден!'
+    case-given: '<green>Кейс "%case%" выдан игроку %player%'
+    case-received: '<green>Вы получили кейс: %case%'
+    config-reloaded: '<green>Конфигурация кейсов перезагружена!'
+    no-cases-found: '<red>Кейсов не найдено!'
+    available-cases: '<yellow>Доступные кейсы:'
+    case-list-format: '<gray>- %id% (%name%)'

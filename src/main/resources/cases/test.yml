@@ -1,0 +1,31 @@
+options:
+  name: '<yellow>Тестовый кейс</yellow>'
+  description:
+    - '<gray>Простой тестовый кейс</gray>'
+    - '<gray>для проверки плагина</gray>'
+  item: CHEST
+
+rewards:
+  diamond:
+    chance: 50
+    titleText: 'Вы выбили:'
+    subtitleText: '<blue>Алмаз!</blue>'
+    message:
+      - '<green>%username% получил алмаз из кейса!'
+    commands-give: 'give %p diamond 1'
+
+  emerald:
+    chance: 30
+    titleText: 'Вы выбили:'
+    subtitleText: '<green>Изумруд!</green>'
+    message:
+      - '<green>%username% получил изумруд из кейса!'
+    commands-give: 'give %p emerald 1'
+
+  gold:
+    chance: 20
+    titleText: 'Вы выбили:'
+    subtitleText: '<gold>Золото!</gold>'
+    message:
+      - '<green>%username% получил золото из кейса!'
+    commands-give: 'give %p gold_ingot 5'
